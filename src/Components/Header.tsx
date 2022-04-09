@@ -8,7 +8,7 @@ function Header(){
 
         <Nav>
             <ul>
-                <li><NavLink to="/login">Login</NavLink></li>
+                <li><NavLink to="/">Inicio</NavLink></li>
                 <li><NavLink to="/elementos">Elementos</NavLink></li>
             </ul>
         </Nav>
