@@ -75,22 +75,24 @@ animation: spin 1s linear infinite;
 `;
 
 
-export const Alert = styled.div`
 
-background-color:red;
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 800px;
-margin: auto;
-
-top:100px;
-width:300px;
-height:60px;
+export const FormData = styled.div`
+width:500px;
+height:auto;
+padding:20px;
+margin:auto;
+background-color:#332FD0;
 border-radius:5px;
-padding:10px;
-text-align:center;
 color:#fff;
-font-size:18px;
+margin-top:100px;
+@media (max-width:500px){
+width:100%;
+}
+
 `;
+
+export const Label = styled.div`
+font-weight:bold;
+`;
+
+

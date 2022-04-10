@@ -1,7 +1,11 @@
-import {FormLogin,Button,Input,Error,Loading} from "../Styles/Form.styles";
+import {FormLogin,Button,Input,Error,Loading,FormData,Label} from "../Styles/Form.styles";
 import { Formik } from "formik";
 import { getUser } from "../Services/getUser";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { store } from "../Provider/provider";
+
+
+
 
 
 
@@ -10,9 +14,33 @@ function Form (){
 
     const [load,SetLoad] = useState(false);
     const [message,SetMessage] = useState("");
+    const {user,dataUser,SetUser,SetDataUser} = useContext(store);
+  
+    
+  
+
+
+ 
 
 return(
 
+
+user ?
+<FormData>
+<h1>Datos de usuario</h1>
+<Label>Edad: {dataUser.DataBeanProperties.Age}</Label>
+<Label>EntityName: {dataUser.DataBeanProperties.EntityName}</Label>
+<Label>IDAccount: {dataUser.DataBeanProperties.IDAccount}</Label>
+<Label>IDFunctionalLn: {dataUser.DataBeanProperties.IDFunctionalLn}</Label>
+<Label>Name1: {dataUser.DataBeanProperties.Name1}</Label>
+<Label>Nit: {dataUser.DataBeanProperties.Nit}</Label>
+<Label>RoleID: {dataUser.DataBeanProperties.RoleID}</Label>
+<Label>Since: {dataUser.DataBeanProperties.Since}</Label>
+<Label>Surname1: {dataUser.DataBeanProperties.Surname1}</Label>
+<Label>eMail: {dataUser.DataBeanProperties.eMail}</Label>
+<Label>Msg:  {dataUser.DataBeanProperties.msg}</Label>
+</FormData>
+:
 
 <Formik 
 
@@ -28,7 +56,10 @@ onSubmit={async (values,{resetForm})=>{
     const {msg,Account} = await getUser(values.username,values.password);
     SetLoad(false);
     if(Account){
-    console.log(Account)
+    localStorage.setItem("username",values.username);
+    localStorage.setItem("password",values.password);
+    SetUser(true);
+    SetDataUser(Account);
     }else{
     SetMessage(msg)
     }
