@@ -1,10 +1,11 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import Header from "./Components/Header";
 import {Route,Routes} from "react-router-dom";
-import Form from "./Components/Form";
+import Form from "./Views/Form";
 import { getUser } from "./Services/getUser";
 import { store } from "./Provider/provider";
 import {Loading} from "./Styles/";
+import TableElements from "./Views/TableElements";
 
 
 
@@ -51,7 +52,7 @@ function App():JSX.Element {
     <Header/>
     <Routes>
     <Route path="/" element={<Form/>}/>
-    <Route path="/elementos" element={<h1>Elementos</h1>}/>
+    <Route path="/elementos" element={<TableElements/>}/>
     </Routes>
     </Fragment>
   );
