@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 
-export const createUser = async (name : String,value : String,description : String,attribute : String) => {
+export const createUser = async (name : String,value : String,description : String,state : String) => {
 
     const axiosRequestConfiguration : AxiosRequestConfig = {
 
@@ -22,7 +22,7 @@ export const createUser = async (name : String,value : String,description : Stri
             Valor: value,
             Descripcion: description,
             IDPropiedades: null,
-            Atributo: attribute
+            Estado:state,
             },
             "DataBeanName": "com.admin.bean.Propiedades"
             }

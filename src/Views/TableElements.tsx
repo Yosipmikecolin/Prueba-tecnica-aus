@@ -17,8 +17,8 @@ function TableElements(){
     const [data,SetData] = useState([]);
     const [user,SetUser] = useState({Nombre:"",Descripcion:"",IDPropiedades:"",Since:"",Valor:""});
     const [detect,SetDetect] = useState(false);
-    const [create,SetCreate] = useState(false);
-    const [values,SetValues] = useState({name:"",value:"",description:"",id:"",attribute:""});
+    const [show,SetShow] = useState(false);
+    const [values,SetValues] = useState({name:"",value:"",description:"",id:"",state:""});
     const [error,SetError] = useState(false);
     const [edit,SetEdit] = useState(false);
 
@@ -47,26 +47,28 @@ function TableElements(){
     SetDetect(!detect);
     }
 
-    async function EditUser(name:any,value:any,description:any,id:any){
-        SetCreate(true);
-        SetValues({name:name,value:value,description:description,id:id,attribute:"ss"});
-        await editUser(values.name,values.value,values.description,value.id);
-        
-       
-       
+    async function EditUser(e : any){
+        e.preventDefault();
+        SetShow(false);
+        const {name,description,value,state,id} = values;
+        const res = await editUser(name,value,description,state,Number(id));
+        console.log(res)
+        SetDetect(!detect);
+        SetShow(false);
+        SetValues({name:"",value:"",description:"",id:"",state:""});
     }
 
 
     async function saveUser(e : any){
         e.preventDefault();
-       if(!values.name || !values.description || !values.attribute || !values.id || !values.value){
+       if(!values.name || !values.description || !values.state || !values.id || !values.value){
         SetError(true);
        }else{
-        const {name,description,value,attribute} = values;
-        await createUser(name,value,description,attribute);
+        const {name,description,value,state} = values;
+        await createUser(name,value,description,state);
         SetDetect(!detect);
-        SetCreate(false);
-        SetValues({name:"",value:"",description:"",id:"",attribute:""});
+        SetShow(false);
+        SetValues({name:"",value:"",description:"",id:"",state:""});
        }
     }
 
@@ -80,7 +82,7 @@ function TableElements(){
             <h4>Descripcion : {user.Descripcion}</h4>
             <h4>IDPerfilBanco : null</h4>
             <h4>IDPropiedades : {user.IDPropiedades}</h4>
-            <h4>Since : {user.Since}</h4>
+            <h4>Fecha de creación : {user.Since}</h4>
             <h4>Valor : {user.Valor}</h4>
             <ButtonClose type="submit" onClick={()=>{SetUser({Nombre:"",Descripcion:"",IDPropiedades:"",Since:"",Valor:""})}}><img src={IconClose} width="40" alt="close"/> </ButtonClose>
         </Detail>
@@ -91,28 +93,28 @@ function TableElements(){
 
         data.length ? 
         <Fragment>
-        {create ?
-        <Form onSubmit={saveUser}>
+        {show ?
+        <Form onSubmit={(e)=>{edit ? EditUser(e) : saveUser(e)}}>
             <h1>{edit ? "Editar usuario" : "Crear usuario"}</h1>
             <Input type="text" name="name" value={values.name} placeholder="Nombre" onChange={(e)=>{SetValues({...values,name:e.target.value})}}/>
             <Input type="text" name="value" value={values.value} placeholder="Valor" onChange={(e)=>{SetValues({...values,value:e.target.value})}}/>
             <Input type="text" name="description" value={values.description} placeholder="Descripción" onChange={(e)=>{SetValues({...values,description:e.target.value})}}/>
             <Input type="number" name="id" value={values.id} placeholder="ID" onChange={(e)=>{SetValues({...values,id:e.target.value})}}/>
-            <Input type="text" name="attribute" value={values.attribute} placeholder="Atributo" onChange={(e)=>{SetValues({...values,attribute:e.target.value})}}/>
+            <Input type="number" name="state" value={values.state} placeholder="Estado" onChange={(e)=>{SetValues({...values,state:e.target.value})}}/>
              {error && <Error>llena todos los campos</Error>}
             <Button>{edit ? "Editar usuario" : "Crear usuario"}</Button>
-            <Button2 onClick={()=>{SetCreate(false);SetEdit(false)}}>Cerrar</Button2>
+            <Button2 onClick={()=>{SetShow(false);SetEdit(false);SetValues({name:"",value:"",description:"",id:"",state:""})}}>Cerrar</Button2>
         </Form>
         :
 
         <Table>
         <thead>
         <tr>
+        <td>ID</td>
         <td>Descripcion</td>
         <td>Estado</td>
-        <td>IDPropiedades</td>
         <td>Nombre</td>
-        <td>Since</td>
+        <td>Fecha de creación</td>
         <td>Valor</td>
         <td>Detalle</td>
         <td>Editar</td>
@@ -130,14 +132,14 @@ function TableElements(){
 
         <tr key={index}>
             
+        <td>{IDPropiedades}</td>
         <td>{Descripcion}</td>
         <td>{Estado}</td>
-        <td>{IDPropiedades}</td>
         <td>{Nombre}</td>
         <td>{Since}</td>
         <td>{Valor}</td>
         <td onClick={()=>{DetailUser(IDPropiedades)}}><img  style={{cursor:"pointer"}} src={IconDetail} width="40" alt="detail"/></td>
-        <td onClick={()=>{EditUser(Nombre,Valor,Descripcion,IDPropiedades);SetEdit(true)}}><img  style={{cursor:"pointer"}} src={IconEdit} width="40" alt="edit"/></td>
+        <td onClick={()=>{SetValues({name:Nombre,value:Valor,description:Descripcion,id:IDPropiedades,state:Estado});SetEdit(true);SetShow(true)}}><img  style={{cursor:"pointer"}} src={IconEdit} width="40" alt="edit"/></td>
         <td onClick={()=>{DeleteUser(IDPropiedades)}}><img  style={{cursor:"pointer"}} src={IconDelete} width="40" alt="delete"/></td>
         </tr>
         )
@@ -147,7 +149,7 @@ function TableElements(){
         </Table>
         }
         
-        {!create && <CreateUser onClick={()=>{SetCreate(true)}}>Crear nuevo usuario</CreateUser>}
+        {!show && <CreateUser onClick={()=>{SetShow(true)}}>Crear nuevo usuario</CreateUser>}
        
 </Fragment>
 :<Loading/>
