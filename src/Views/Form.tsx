@@ -6,84 +6,84 @@ import { store } from "../Provider/provider";
 
 
 
-function Form (){
+    function Form (){
 
-const [load,SetLoad] = useState(false);
-const [message,SetMessage] = useState("");
-const {user,dataUser,SetUser,SetDataUser} = useContext(store);
-  
+    const [load,SetLoad] = useState(false);
+    const [message,SetMessage] = useState("");
+    const {user,dataUser,SetUser,SetDataUser} = useContext(store);
     
+        
 
-return(
-
-
-user ?
-<FormData>
-<h1>Datos de usuario</h1>
-<Label>Edad: {dataUser.DataBeanProperties.Age}</Label>
-<Label>EntityName: {dataUser.DataBeanProperties.EntityName}</Label>
-<Label>IDAccount: {dataUser.DataBeanProperties.IDAccount}</Label>
-<Label>IDFunctionalLn: {dataUser.DataBeanProperties.IDFunctionalLn}</Label>
-<Label>Name1: {dataUser.DataBeanProperties.Name1}</Label>
-<Label>Nit: {dataUser.DataBeanProperties.Nit}</Label>
-<Label>RoleID: {dataUser.DataBeanProperties.RoleID}</Label>
-<Label>Since: {dataUser.DataBeanProperties.Since}</Label>
-<Label>Surname1: {dataUser.DataBeanProperties.Surname1}</Label>
-<Label>eMail: {dataUser.DataBeanProperties.eMail}</Label>
-<Label>Msg:  {dataUser.DataBeanProperties.msg}</Label>
-</FormData>
-:
-
-<Formik 
-
-initialValues={{username:"",password:""}}
-
-onSubmit={async (values,{resetForm})=>{
-
-if(!values.username || !values.password){
-SetMessage("llena todos los campos")
-}else{
-resetForm();
-SetLoad(true)
-const {msg,Account} = await getUser(values.username,values.password);
-SetLoad(false);
-if(Account){
-localStorage.setItem("username",values.username);
-localStorage.setItem("password",values.password);
-SetUser(true);
-SetDataUser(Account);
-}else{
-SetMessage(msg)
-}
-}}
+    return(
 
 
+    user ?
+    <FormData>
+    <h1>Datos de usuario</h1>
+    <Label>Edad: {dataUser.DataBeanProperties.Age}</Label>
+    <Label>EntityName: {dataUser.DataBeanProperties.EntityName}</Label>
+    <Label>IDAccount: {dataUser.DataBeanProperties.IDAccount}</Label>
+    <Label>IDFunctionalLn: {dataUser.DataBeanProperties.IDFunctionalLn}</Label>
+    <Label>Name1: {dataUser.DataBeanProperties.Name1}</Label>
+    <Label>Nit: {dataUser.DataBeanProperties.Nit}</Label>
+    <Label>RoleID: {dataUser.DataBeanProperties.RoleID}</Label>
+    <Label>Since: {dataUser.DataBeanProperties.Since}</Label>
+    <Label>Surname1: {dataUser.DataBeanProperties.Surname1}</Label>
+    <Label>eMail: {dataUser.DataBeanProperties.eMail}</Label>
+    <Label>Msg:  {dataUser.DataBeanProperties.msg}</Label>
+    </FormData>
+    :
 
-}>
+    <Formik 
 
-{({handleSubmit,handleChange,values})=>(
+    initialValues={{username:"",password:""}}
 
-<Fragment>
-<FormLogin onSubmit={handleSubmit}>
-<h1>Iniciar sesión</h1>
-<Input type="text" name="username" placeholder="username" value={values.username} onChange={handleChange}/>
-<Input type="password" name="password" placeholder="password" value={values.password} onChange={handleChange}/>
-<Error>{message}</Error>
-<Button type="submit">{load ? <Loading/> : "Iniciar sesión"}</Button>
-</FormLogin>
+    onSubmit={async (values,{resetForm})=>{
 
-<BoxUser>
-<h2>Datos del usuario</h2>
-<p><h4>Emial: </h4>capacitacion@gmail.com</p>
-<p><h4>Passwrod: </h4>Brunofernando123*</p>
-</BoxUser>
-</Fragment>
-)}
+    if(!values.username || !values.password){
+    SetMessage("llena todos los campos")
+    }else{
+    resetForm();
+    SetLoad(true)
+    const {msg,Account} = await getUser(values.username,values.password);
+    SetLoad(false);
+    if(Account){
+    localStorage.setItem("username",values.username);
+    localStorage.setItem("password",values.password);
+    SetUser(true);
+    SetDataUser(Account);
+    }else{
+    SetMessage(msg)
+    }
+    }}
 
-</Formik>
 
-       
-)}
+
+    }>
+
+    {({handleSubmit,handleChange,values})=>(
+
+    <Fragment>
+    <FormLogin onSubmit={handleSubmit}>
+    <h1>Iniciar sesión</h1>
+    <Input type="text" name="username" placeholder="username" value={values.username} onChange={handleChange}/>
+    <Input type="password" name="password" placeholder="password" value={values.password} onChange={handleChange}/>
+    <Error>{message}</Error>
+    <Button type="submit">{load ? <Loading/> : "Iniciar sesión"}</Button>
+    </FormLogin>
+
+    <BoxUser>
+    <h2>Datos del usuario</h2>
+    <p><h4>Emial: </h4>capacitacion@gmail.com</p>
+    <p><h4>Passwrod: </h4>Brunofernando123*</p>
+    </BoxUser>
+    </Fragment>
+    )}
+
+    </Formik>
+
+        
+    )}
 
 
 

@@ -7,27 +7,24 @@ function Header(){
 
     const {user,SetUser,SetDataUser} = useContext(store);
 
-
     function CloseSesion(){
-
-        localStorage.removeItem("username");
-        localStorage.removeItem("password");
-        SetUser(false);
-        SetDataUser({});
-        window.location.reload();
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    SetUser(false);
+    SetDataUser({});
+    window.location.reload();
     }
 
 
     return (
 
-        <Nav>
-            <ul>
-                <li><NavLink to="/">Inicio</NavLink></li>
-                {user && <li><NavLink to="/elementos">Elementos</NavLink></li>}
-               
-            </ul>
-            {user && <ButtonClose onClick={CloseSesion}>Cerrar sesión</ButtonClose>}
-        </Nav>
+    <Nav>
+    <ul>
+    <li><NavLink to="/">Inicio</NavLink></li>
+    {user && <li><NavLink to="/elementos">Elementos</NavLink></li>}      
+    </ul>
+    {user && <ButtonClose onClick={CloseSesion}>Cerrar sesión</ButtonClose>}
+    </Nav>
     )
 
 }
