@@ -8,8 +8,6 @@ import {Loading} from "./Styles/";
 import TableElements from "./Views/TableElements";
 
 
-
-
 function App():JSX.Element {
 
 
@@ -18,22 +16,20 @@ function App():JSX.Element {
 
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(()=>{
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+    if(username && password){
+    loadData(username,password);
+    }else{
+    SetLoad(false);
+    }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(()=>{
-  const username = localStorage.getItem("username");
-  const password = localStorage.getItem("password");
-  if(username && password){
-  loadData(username,password);
-  }else{
-  SetLoad(false);
-  }
-
-  });
+    });
 
 
-   async function loadData(username : String,password : String){
-
+    async function loadData(username : String,password : String){
     const {Account} = await getUser(username,password);
     SetLoad(false);
     SetUser(true);
@@ -45,7 +41,6 @@ function App():JSX.Element {
 
 
   return (
-
     load ? <Loading/>
     :
     <Fragment>

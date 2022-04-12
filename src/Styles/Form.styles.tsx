@@ -96,3 +96,19 @@ font-weight:bold;
 `;
 
 
+export const BoxUser = styled.div`
+padding:40px;
+border-radius:5px;
+margin:auto;
+width:300px;
+margin-top:20px;
+background-color:red;
+text-align:center;
+color:#fff;
+background-color:#332FD0;
+p{
+text-align:left;
+}
+`;
+
+

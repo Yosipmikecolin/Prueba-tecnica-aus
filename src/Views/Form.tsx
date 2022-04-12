@@ -1,26 +1,18 @@
-import {FormLogin,Button,Input,Error,Loading,FormData,Label} from "../Styles/Form.styles";
+import {FormLogin,Button,Input,Error,Loading,FormData,Label,BoxUser} from "../Styles/Form.styles";
 import { Formik } from "formik";
 import { getUser } from "../Services/getUser";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { store } from "../Provider/provider";
-
-
-
 
 
 
 function Form (){
 
-
-    const [load,SetLoad] = useState(false);
-    const [message,SetMessage] = useState("");
-    const {user,dataUser,SetUser,SetDataUser} = useContext(store);
+const [load,SetLoad] = useState(false);
+const [message,SetMessage] = useState("");
+const {user,dataUser,SetUser,SetDataUser} = useContext(store);
   
     
-  
-
-
- 
 
 return(
 
@@ -44,26 +36,26 @@ user ?
 
 <Formik 
 
-initialValues={{username:"capacitacion@gmail.com",password:"Brunofernando123*"}}
+initialValues={{username:"",password:""}}
 
 onSubmit={async (values,{resetForm})=>{
 
-    if(!values.username || !values.password){
-    SetMessage("llena todos los campos")
-    }else{
-    resetForm();
-    SetLoad(true)
-    const {msg,Account} = await getUser(values.username,values.password);
-    SetLoad(false);
-    if(Account){
-    localStorage.setItem("username",values.username);
-    localStorage.setItem("password",values.password);
-    SetUser(true);
-    SetDataUser(Account);
-    }else{
-    SetMessage(msg)
-    }
-    }}
+if(!values.username || !values.password){
+SetMessage("llena todos los campos")
+}else{
+resetForm();
+SetLoad(true)
+const {msg,Account} = await getUser(values.username,values.password);
+SetLoad(false);
+if(Account){
+localStorage.setItem("username",values.username);
+localStorage.setItem("password",values.password);
+SetUser(true);
+SetDataUser(Account);
+}else{
+SetMessage(msg)
+}
+}}
 
 
 
@@ -71,6 +63,7 @@ onSubmit={async (values,{resetForm})=>{
 
 {({handleSubmit,handleChange,values})=>(
 
+<Fragment>
 <FormLogin onSubmit={handleSubmit}>
 <h1>Iniciar sesión</h1>
 <Input type="text" name="username" placeholder="username" value={values.username} onChange={handleChange}/>
@@ -79,17 +72,18 @@ onSubmit={async (values,{resetForm})=>{
 <Button type="submit">{load ? <Loading/> : "Iniciar sesión"}</Button>
 </FormLogin>
 
-
+<BoxUser>
+<h2>Datos del usuario</h2>
+<p><h4>Emial: </h4>capacitacion@gmail.com</p>
+<p><h4>Passwrod: </h4>Brunofernando123*</p>
+</BoxUser>
+</Fragment>
 )}
 
 </Formik>
 
        
-    )
-
-}
-
-
+)}
 
 
 
