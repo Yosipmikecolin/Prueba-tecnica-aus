@@ -44,7 +44,7 @@ user ?
 
 <Formik 
 
-initialValues={{username:"",password:""}}
+initialValues={{username:"capacitacion@gmail.com",password:"Brunofernando123*"}}
 
 onSubmit={async (values,{resetForm})=>{
 

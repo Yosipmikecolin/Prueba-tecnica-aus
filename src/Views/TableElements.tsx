@@ -10,6 +10,9 @@ import { createUser } from "../Services/createUser";
 import { editUser } from "../Services/editUser";
 import IconDelete from "../Img/delete.png";
 import IconEdit from "../Img/editar.png";
+import { useContext } from "react";
+import { store } from "../Provider/provider";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,6 +24,8 @@ function TableElements(){
     const [values,SetValues] = useState({name:"",value:"",description:"",id:"",state:""});
     const [error,SetError] = useState(false);
     const [edit,SetEdit] = useState(false);
+    const auth = useContext(store);
+const navigation = useNavigate();
 
     useEffect(()=>{
     Load()
@@ -28,10 +33,15 @@ function TableElements(){
 
 
 
+    useEffect(()=>{
+    if(!auth.user){
+    navigation("/")
+    }
+    },[auth,navigation])
+
 
     async function Load(){
     const res = await getElements();
-    console.log(res)
     SetData(res);
     }
 
@@ -75,6 +85,7 @@ function TableElements(){
 
     return (
 
+        
        
         (user.Nombre || user.Descripcion || user.Since || user.Valor) ? 
         <Detail>
@@ -90,7 +101,6 @@ function TableElements(){
 
         
       
-
         data.length ? 
         <Fragment>
         {show ?
