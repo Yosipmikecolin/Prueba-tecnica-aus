@@ -34,32 +34,33 @@ import {Button,Button2,ButtonClose,CreateUser,Detail,Error,Form,Input,Table} fro
     },[detect]);
 
 
-
+    //AUTHENTICATE USER
     useEffect(()=>{
     if(!auth.user){
     navigation("/")
     }},[auth,navigation])
 
 
+    //GET ITEMS
     async function Load(){
     const res = await getElements();
     SetData(res);
     }
 
-
+    //GET ITEMS
     async function DetailUser(id :Number){
     const res = await findUser(id);
     SetUser(res)
     }
 
-
+    //DELETE USER
     async function DeleteUser(id :Number){
     await deleteUser(id);
     SetDetect(!detect);
     }
 
 
-
+    //EDIT USER
     async function EditUser(e : any){
     e.preventDefault();
     const {name,description,value,state,id} = values;
@@ -71,7 +72,7 @@ import {Button,Button2,ButtonClose,CreateUser,Detail,Error,Form,Input,Table} fro
     }
 
 
-
+    //CREATE A USER
     async function saveUser(e : any){
     e.preventDefault();
     if(!values.name || !values.description || !values.state || !values.id || !values.value){
@@ -87,8 +88,7 @@ import {Button,Button2,ButtonClose,CreateUser,Detail,Error,Form,Input,Table} fro
 
 
     return (
-
-            
+      
         
     (user.Nombre || user.Descripcion || user.Since || user.Valor) ? 
     <Detail>
