@@ -8,5 +8,5 @@
 
 ## Conclusión
 
-para poder acceder a la información del usuario es necesario autenticarse primero,ya que no se uso jwt simule un inicio de sesión con useContext y localStorage.
+Para poder acceder a la información del usuario es necesario autenticarse primero,ya que no se uso jwt simule un inicio de sesión con useContext y localStorage.
 La ruta de elementos es privada y los servicios estan modulados.
